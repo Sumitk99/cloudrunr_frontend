@@ -130,6 +130,17 @@
           
           <div class="form-row">
             <mat-form-field appearance="outline" #formField>
+              <!-- <mat-label>Root Folder</mat-label> -->
+              <input 
+                matInput 
+                formControlName="root" 
+                placeholder=".">
+              <mat-icon matPrefix>folder_open</mat-icon>
+              <mat-hint>Root folder of your project (use '.' for repository root)</mat-hint>
+              <mat-error *ngIf="form.get('root')?.errors?.['required']">Root folder is required</mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" #formField>
               <!-- <mat-label>Build Folder</mat-label> -->
               <input 
                 matInput 
@@ -139,7 +150,9 @@
               <mat-hint>Output folder after build (usually 'dist' or 'build')</mat-hint>
               <mat-error *ngIf="form.get('dist_folder')?.errors?.['required']">Build folder is required</mat-error>
             </mat-form-field>
+          </div>
 
+          <div class="form-row">
             <mat-form-field appearance="outline" #formField>
               <!-- <mat-label>Build Command (Optional)</mat-label> -->
               <input 
@@ -157,6 +170,7 @@
               <mat-icon>info</mat-icon>
               <div class="hint-content">
                 <h5>{{ selectedFramework.label }} Configuration</h5>
+                <p><strong>Typical root folder:</strong> {{ selectedFramework.rootFolder }}</p>
                 <p><strong>Typical build folder:</strong> {{ selectedFramework.buildFolder }}</p>
                 <p><strong>Typical build command:</strong> {{ selectedFramework.buildCommand }}</p>
               </div>

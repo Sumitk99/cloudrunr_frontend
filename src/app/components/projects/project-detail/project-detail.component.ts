@@ -15,6 +15,7 @@ export interface ProjectDetail {
   user_id: string;
   git_url: string;
   framework: string;
+  root: string;
   dist_folder: string;
   project_id: string;
   name: string;

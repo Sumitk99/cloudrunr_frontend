@@ -20,6 +20,7 @@ interface Framework {
   label: string;
   icon: string;
   description: string;
+  rootFolder: string;
   buildFolder: string;
   buildCommand: string;
 }
@@ -63,6 +64,7 @@ export class NewProjectComponent implements OnInit, AfterViewInit {
       label: 'React', 
       icon: 'assets/frameswork_logos/react.svg',
       description: 'A JavaScript library for building user interfaces',
+      rootFolder: '.',
       buildFolder: 'build',
       buildCommand: 'npm run build'
     },
@@ -71,6 +73,7 @@ export class NewProjectComponent implements OnInit, AfterViewInit {
       label: 'Angular', 
       icon: 'assets/frameswork_logos/angular.svg',
       description: 'Platform for building mobile and desktop web applications',
+      rootFolder: '.',
       buildFolder: 'dist',
       buildCommand: 'ng build'
     }
@@ -85,6 +88,7 @@ export class NewProjectComponent implements OnInit, AfterViewInit {
     this.form = this.fb.group({
       git_url: ['', [Validators.required, Validators.pattern(/^https:\/\/github\.com\/.+\/.+$/)]],
       framework: ['', [Validators.required]],
+      root: ['.', [Validators.required]],
       dist_folder: ['', [Validators.required]],
       project_id: ['', [Validators.required, Validators.pattern(/^[a-z0-9-]+$/)]],
       name: ['', [Validators.required, Validators.minLength(2)]],
@@ -99,6 +103,7 @@ export class NewProjectComponent implements OnInit, AfterViewInit {
       if (framework) {
         this.selectedFramework = framework;
         this.form.patchValue({
+          root: framework.rootFolder,
           dist_folder: framework.buildFolder,
           run_command: framework.buildCommand
         });
@@ -198,6 +203,7 @@ export class NewProjectComponent implements OnInit, AfterViewInit {
       const payload: NewProjectRequest = {
         git_url: this.form.value.git_url,
         framework: this.form.value.framework,
+        root: this.form.value.root,
         dist_folder: this.form.value.dist_folder,
         project_id: this.form.value.project_id,
         name: this.form.value.name,
